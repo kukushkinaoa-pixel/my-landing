@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Okey, LadCraft — официальная дистрибьюция ИИ-агентов</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF; --bg-soft:#F6F5FA; --surface:#FFFFFF;
+  --ink:#1C1C22; --ink-2:#56565F; --ink-3:#8E8E99;
+  --violet:#7C5CFC; --violet-deep:#6B46E5; --violet-soft:#EFEAFF;
+  --peach:#FB8760; --peach-soft:#FFEDE4;
+  --dark:#2B2B2B;
+  --line:#ECEAF2; --line-2:#E0DDEA;
+  --grad-hero:linear-gradient(120deg,#6E4BE0 0%,#8A5CF0 38%,#B07AE8 64%,#FB8760 116%);
+  --grad-accent:linear-gradient(135deg,#7C5CFC 0%,#FB8760 100%);
+  --r:10px; --r-md:18px; --r-lg:24px; --r-full:999px;
+  --shadow:0 1px 2px rgba(28,28,40,.04),0 10px 30px rgba(28,28,40,.06);
+  --shadow-card:0 2px 4px rgba(28,28,40,.04),0 14px 36px rgba(96,72,200,.07);
+  --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.55}
+
+.wrap{max-width:1260px;margin:0 auto;padding:0 24px}
+.section{padding:90px 0}
+.section--soft{background:var(--bg-soft)}
+.section--hero{background:var(--grad-hero);color:#fff;padding:100px 0 120px;position:relative;overflow:hidden}
+.glow{position:absolute;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(255,180,140,.5),transparent 65%);bottom:-180px;right:-120px;filter:blur(30px);z-index:0}
+.float{position:absolute;width:74px;height:74px;border-radius:20px;background:rgba(255,255,255,.92);box-shadow:0 16px 40px rgba(60,30,120,.28);display:flex;align-items:center;justify-content:center;z-index:1}
+.float svg{width:34px;height:34px}
+.f1{top:14%;left:9%;transform:rotate(-8deg)}
+.f2{top:24%;right:11%;transform:rotate(7deg)}
+.f3{bottom:20%;left:13%;transform:rotate(6deg)}
+.f4{bottom:16%;right:10%;transform:rotate(-6deg)}
+
+/* typography */
+.eyebrow{font-size:14px;font-weight:600;letter-spacing:.02em;color:var(--violet-deep);margin-bottom:14px}
+h1{font-size:58px;font-weight:800;line-height:1.06;letter-spacing:-.025em;margin-bottom:22px}
+h2{font-size:40px;font-weight:800;line-height:1.1;letter-spacing:-.025em;margin-bottom:14px;color:var(--ink)}
+h3{font-size:19px;font-weight:700;line-height:1.25;margin-bottom:8px;color:var(--ink)}
+.hl{color:var(--violet-deep)}
+.lead{font-size:20px;line-height:1.5;color:var(--ink-2);max-width:880px}
+.sub{font-size:18px;color:var(--ink-2);margin-bottom:4px;max-width:900px}
+p,li{font-size:16px;line-height:1.55;color:var(--ink-2)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--dark);color:#fff;font-size:16px;font-weight:600;padding:14px 26px;border-radius:var(--r);text-decoration:none;box-shadow:0 10px 26px rgba(0,0,0,.22);transition:.2s;border:none;cursor:pointer}
+.btn:hover{background:#3a3a3a}
+.btn--outline{background:transparent;color:var(--violet-deep);border:2px solid var(--violet);box-shadow:none}
+.btn--outline:hover{background:var(--violet-soft)}
+.btn--white{background:#fff;color:var(--violet-deep);box-shadow:0 10px 26px rgba(0,0,0,.15)}
+.btn--white:hover{background:var(--violet-soft)}
+
+/* badge / tag */
+.tag{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;padding:7px 15px;border-radius:var(--r-full);background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);color:#fff;backdrop-filter:blur(6px)}
+.tag .d{width:7px;height:7px;border-radius:50%;background:var(--peach)}
+.tag--light{background:var(--violet-soft);color:var(--violet-deep);border:none}
+.tag--peach{background:var(--peach-soft);color:var(--peach);border:none}
+
+/* grids */
+.grid{display:grid;gap:22px;margin-top:30px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+
+/* cards */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:26px;box-shadow:var(--shadow-card);position:relative}
+.card.top{border-top:3px solid var(--violet)}
+.card .ic{width:50px;height:50px;border-radius:14px;background:var(--violet-soft);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.card .ic.peach{background:var(--peach-soft)}
+.card .ic svg{width:25px;height:25px;stroke:var(--violet-deep);fill:none;stroke-width:2}
+.card .ic.peach svg{stroke:var(--peach)}
+.card ul{list-style:none;margin-top:6px}
+.card li{font-size:15px;padding-left:20px;position:relative;margin-bottom:7px;color:var(--ink-2)}
+.card li:before{content:"";position:absolute;left:2px;top:8px;width:6px;height:6px;border-radius:50%;background:var(--violet)}
+.card .num{font-size:13px;font-weight:800;color:var(--violet-deep);background:var(--violet-soft);width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;position:absolute;top:24px;right:24px}
+
+/* table */
+table{width:100%;border-collapse:collapse;margin-top:16px;font-size:15px;background:var(--surface);border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow)}
+th{text-align:left;padding:13px 18px;background:var(--bg-soft);color:var(--ink);font-weight:700;font-size:14px}
+td{padding:12px 18px;border-top:1px solid var(--line);color:var(--ink-2)}
+td b{color:var(--ink);font-weight:600}
+
+/* note */
+.note{background:var(--bg-soft);border:1px solid var(--line);border-left:3px solid var(--violet);border-radius:var(--r);padding:18px 22px;margin-top:24px;font-size:15px}
+.note b{color:var(--ink)}
+.note--peach{border-left-color:var(--peach)}
+
+/* form */
+input,select,textarea{width:100%;padding:12px 16px;border:1px solid var(--line);border-radius:var(--r);font-family:inherit;font-size:15px;color:var(--ink);background:var(--bg);transition:.2s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--violet);box-shadow:0 0 0 3px var(--violet-soft)}
+label{display:block;font-size:14px;font-weight:600;margin-bottom:6px;color:var(--ink)}
+.form-group{margin-bottom:18px}
+.checkbox-group{display:flex;flex-wrap:wrap;gap:10px}
+.checkbox-group label{display:flex;align-items:center;gap:8px;font-weight:400;font-size:14px;cursor:pointer}
+.checkbox-group input[type=checkbox]{width:auto;accent-color:var(--violet)}
+
+/* okey init */
+.okey-init{font-weight:800;color:var(--peach)}
+.section--hero .okey-init{color:#FFD9C4}
+
+/* zoom-note under buttons */
+.zoom-note{display:flex;align-items:center;gap:10px;justify-content:center;margin-top:28px;font-size:15px;color:rgba(255,255,255,.78);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:var(--r);padding:14px 24px;max-width:620px;margin-left:auto;margin-right:auto;backdrop-filter:blur(6px)}
+.zoom-note svg{width:20px;height:20px;stroke:var(--peach);fill:none;stroke-width:2;flex-shrink:0}
+
+/* platform-short in hero */
+.platform-short{font-size:15px;color:rgba(255,255,255,.7);margin-top:20px;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.5}
+
+/* footer */
+.footer{background:var(--dark);color:#fff;padding:64px 0 40px}
+.footer a{color:rgba(255,255,255,.7);text-decoration:none;transition:.15s}
+.footer a:hover{color:var(--peach)}
+
+/* responsive */
+@media(max-width:900px){.g2,.g3,.g4{grid-template-columns:1fr}.wrap{padding:0 20px}.section{padding:64px 0}h1{font-size:36px}h2{font-size:28px}}
+@media(max-width:600px){h1{font-size:32px}h2{font-size:24px}}
+
+/* sticker — pure CSS, no Lottie */
+.sticker-ok{
+  display:inline-flex;vertical-align:middle;align-items:center;justify-content:center;
+  background:#FC6643;border-radius:22%;position:relative;
+  padding:6px;
+  transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s ease;
+  cursor:default;
+}
+.sticker-ok:hover{
+  transform:scale(1.12);
+  box-shadow:0 6px 20px rgba(252,102,67,.45);
+}
+.sticker-ok .sticker-inner{
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Inter',sans-serif;font-weight:800;color:#fff;
+  letter-spacing:-.02em;position:relative;z-index:1;
+}
+/* eye — O letter */
+.sticker-ok .sticker-eye{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;
+  width:1em;height:1em;border-radius:50%;background:#fff;
+}
+.sticker-ok .sticker-eye::before{
+  content:"";position:absolute;width:.62em;height:.62em;border-radius:50%;
+  background:#FC6643;z-index:1;
+}
+.sticker-ok .sticker-eye::after{
+  content:"";position:absolute;width:.22em;height:.22em;border-radius:50%;
+  background:#2C3744;z-index:2;
+}
+/* brow */
+.sticker-ok .sticker-brow{
+  position:absolute;top:-.35em;left:50%;transform:translateX(-50%);
+  width:.55em;height:.12em;border-radius:2px;background:#fff;z-index:3;
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HERO (пересобранный) ===== -->
+<section class="section--hero" style="text-align:center">
+  <div class="float f1"><svg viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div>
+  <div class="float f2"><svg viewBox="0 0 24 24" fill="none" stroke="#FB8760" stroke-width="2"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg></div>
+  <div class="float f3"><svg viewBox="0 0 24 24" fill="none" stroke="#7C5CFC" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg></div>
+  <div class="float f4"><svg viewBox="0 0 24 24" fill="none" stroke="#FB8760" stroke-width="2"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4"/></svg></div>
+  <div class="glow"></div>
+  <div class="wrap" style="position:relative;z-index:1">
+    <span class="tag" style="margin-bottom:24px"><span class="d"></span>Российская платформа автономных ИИ-агентов</span>
+    <div style="margin-bottom:24px">
+      <div style="font-size:clamp(28px,3.5vw,40px);font-weight:800;letter-spacing:-.01em;color:#fff">
+        <span class="sticker-ok" style="width:clamp(42px,5vw,64px);height:clamp(42px,5vw,64px);margin-right:2px;font-size:clamp(28px,3.5vw,40px)"><span class="sticker-inner"><span class="sticker-eye"><span class="sticker-brow"></span></span>K</span></span>ey, LadCraft
+      </div>
+      <div style="font-size:16px;opacity:.8;margin-top:6px">Официальный дистрибьютор платформы автономных ИИ-агентов с измеримым бизнес-эффектом.</div>
+    </div>
+    <h1 style="color:#fff;max-width:800px;margin:0 auto 20px">Станьте партнёром и <span style="color:#ffede4">зарабатывайте на ИИ-агентах</span></h1>
+    <p class="lead" style="color:rgba(255,255,255,.92);max-width:700px;margin:0 auto 36px">Начните с пробного тарифа — бесплатно.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+      <a href="#form" class="btn btn--white">Стать партнёром</a>
+      <a href="#" class="btn btn--outline" style="border-color:rgba(255,255,255,.4);color:#fff">Получить пробный тариф</a>
+    </div>
+    <div class="zoom-note">
+      <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/><circle cx="12" cy="10" r="3"/></svg>
+      После индивидуальной zoom-встречи предоставляется расширенный тариф для партнёра
+    </div>
+  </div>
+</section>
+
+<!-- ===== Платформа: Экосистема ИИ-агентов (слайд 4) ===== -->
+<section class="section section--soft">
+  <div class="wrap">
+    <div class="eyebrow">Платформа LadCraft</div>
+    <h2>Экосистема ИИ-агентов для бизнеса</h2>
+    <p class="sub">Возьмёт рутину на себя, усилит команду и покажет измеримый эффект — без риска для чувствительных данных.</p>
+    <div class="grid g4">
+      <div class="card"><div class="num">01</div>
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h6v6H9z"/></svg></div>
+        <h3>Ladcraft Platform</h3>
+        <ul><li>Оркестратор агентов</li><li>SaaS и On-premise</li><li>RAG + SQL-хранилище</li><li>A2A, маркетплейс</li></ul>
+      </div>
+      <div class="card"><div class="num">02</div>
+        <div class="ic peach"><svg viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4"/></svg></div>
+        <h3>Маша</h3>
+        <ul><li>Протоколист встреч</li><li>Zoom / Телемост</li><li>Транскрибация онлайн</li><li>Протокол по SMART</li></ul>
+      </div>
+      <div class="card"><div class="num">03</div>
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg></div>
+        <h3>Skill Studio</h3>
+        <ul><li>Среда разработки навыков</li><li>Vibe-coding без кода</li><li>Локальный десктоп</li><li>Публикация в 1 кнопку</li></ul>
+      </div>
+      <div class="card"><div class="num">04</div>
+        <div class="ic peach"><svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/></svg></div>
+        <h3>AI Control Center</h3>
+        <ul><li>Модуль безопасности</li><li>117-й приказ ФСТЭК</li><li>Защита от prompt injection</li><li>Корпоративный биллинг</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Кейсы ===== -->
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">Кейсы</div>
+    <h2>Готовые решения для продажи</h2>
+    <p class="sub">Каждый кейс — работающий ИИ-агент, который партнёр может предлагать своим клиентам.</p>
+    <div class="grid g3">
+      <div class="card top"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><h3>ИИ-координатор</h3><p style="font-size:15px">Автоматизация встреч, протоколов, задач. Недельный цикл управления командой.</p><span class="tag tag--light" style="margin-top:12px">Руководители</span></div>
+      <div class="card top"><div class="ic peach"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><h3>Умная рассылка</h3><p style="font-size:15px">A/B-тесты заголовков, авто-рассылки, аналитика. Интеграция с Unisender.</p><span class="tag tag--light" style="margin-top:12px">Маркетинг</span></div>
+      <div class="card top"><div class="ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><h3>Техподдержка</h3><p style="font-size:15px">База знаний ? быстрые ответы. Суфлёр без интеграций ? полная интеграция с Service Desk.</p><span class="tag tag--light" style="margin-top:12px">SaaS, банки</span></div>
+      <div class="card top"><div class="ic peach"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><h3>Сверка договоров</h3><p style="font-size:15px">Сравнение с эталоном за 2 минуты, оценка рисков (светофор), анализ формулировок.</p><span class="tag tag--light" style="margin-top:12px">Юристы</span></div>
+      <div class="card top"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><h3>Мониторинг данных</h3><p style="font-size:15px">Автоматический сбор данных из интернета по расписанию: новости, цены, упоминания — агент мониторит и присылает сводку.</p><span class="tag tag--light" style="margin-top:12px">Аналитика</span></div>
+      <div class="card top"><div class="ic peach"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><h3>Прогнозирование</h3><p style="font-size:15px">Трёхступенчатая система: сбор ? обогащение ? прогноз с вероятностью.</p><span class="tag tag--light" style="margin-top:12px">Финансы</span></div>
+    </div>
+  </div>
+</section>
+<!-- ===== Тарифы ===== -->
+<section class="section section--soft">
+  <div class="wrap">
+    <div class="eyebrow">Тарифы LadCraft</div>
+    <h2>Клиентские тарифы</h2>
+    <p class="sub">Партнёрские условия уточняются индивидуально на встрече.</p>
+
+    <!-- SaaS тарифы — 4 карточки как в презентации -->
+    <h3 style="margin:32px 0 16px">Облачная подписка (SaaS)</h3>
+    <div class="grid g4">
+      <div class="card">
+        <h3>Пробный</h3>
+        <div style="font-size:30px;font-weight:800;color:var(--violet-deep);margin:8px 0 2px">0 ?</div>
+        <p style="font-size:13px;color:var(--ink-3);margin-bottom:12px">разовые 400 кредитов</p>
+        <ul><li>180 минут Маши</li><li>2 ГБ S3-хранилища</li><li>2 вызова / день</li><li>Без докупки кредитов</li></ul>
+      </div>
+      <div class="card">
+        <h3>Старт</h3>
+        <div style="font-size:30px;font-weight:800;color:var(--violet-deep);margin:8px 0 2px">1 490 ?</div>
+        <p style="font-size:13px;color:var(--ink-3);margin-bottom:12px">в месяц · 500 кредитов</p>
+        <ul><li>500 минут Маши</li><li>5 ГБ S3-хранилища</li><li>Докупка кредитов</li><li>Анонимайзер +750 ?</li></ul>
+      </div>
+      <div class="card top" style="border-top-color:var(--violet)">
+        <span class="tag tag--light" style="position:absolute;top:-12px;left:24px">Популярный</span>
+        <h3 style="margin-top:6px">Проф</h3>
+        <div style="font-size:30px;font-weight:800;color:var(--violet-deep);margin:8px 0 2px">4 490 ?</div>
+        <p style="font-size:13px;color:var(--ink-3);margin-bottom:12px">в месяц · 1500 кредитов</p>
+        <ul><li>2000 минут Маши</li><li>10 ГБ S3-хранилища</li><li>Докупка кредитов</li><li>Анонимайзер +2500 ?</li></ul>
+      </div>
+      <div class="card">
+        <h3>Max</h3>
+        <div style="font-size:30px;font-weight:800;color:var(--violet-deep);margin:8px 0 2px">14 990 ?</div>
+        <p style="font-size:13px;color:var(--ink-3);margin-bottom:12px">в месяц · 5000 кредитов</p>
+        <ul><li>Безлимитно Маши</li><li>50 ГБ S3-хранилища</li><li>Докупка кредитов</li><li>Анонимайзер бесплатно</li></ul>
+      </div>
+    </div>
+    <div class="note" style="margin-top:16px"><b>Докупка кредитов:</b> 100 кр. = 400 ? · 500 кр. = 2 000 ? · 1000 кр. = 4 000 ?</div>
+
+    <!-- On-premise -->
+    <h3 style="margin:40px 0 16px">Частное облако / Онпремис</h3>
+    <p class="sub" style="font-size:15px;margin-bottom:20px">Бессрочные серверные лицензии и именные пользовательские. Все цены без НДС.</p>
+    <div class="grid g3">
+      <div class="card">
+        <h3 style="font-size:16px">Бессрочная серверная лицензия Проф</h3>
+        <p style="font-size:13px;color:var(--ink-3);margin-bottom:8px">до 20 подключений</p>
+        <table style="margin-top:4px;font-size:13px">
+          <tr><th>Шт.</th><th>Цена за ед.</th><th>Стоимость</th></tr>
+          <tr><td>1</td><td>450 000 ?</td><td>450 000 ?</td></tr>
+          <tr><td>3</td><td>400 500 ?</td><td>1 201 500 ?</td></tr>
+          <tr><td>5</td><td>351 000 ?</td><td>1 755 000 ?</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3 style="font-size:16px">Бессрочная серверная лицензия Корп</h3>
+        <p style="font-size:13px;color:var(--ink-3);margin-bottom:8px">без ограничений</p>
+        <table style="margin-top:4px;font-size:13px">
+          <tr><th>Шт.</th><th>Цена за ед.</th><th>Стоимость</th></tr>
+          <tr><td>1</td><td>2 100 000 ?</td><td>2 100 000 ?</td></tr>
+          <tr><td>3</td><td>1 869 000 ?</td><td>5 607 000 ?</td></tr>
+          <tr><td>5</td><td>1 638 000 ?</td><td>8 190 000 ?</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3 style="font-size:16px">Именные пользовательские лицензии</h3>
+        <p style="font-size:13px;color:var(--ink-3);margin-bottom:8px">пользовательские</p>
+        <table style="margin-top:4px;font-size:13px">
+          <tr><th>Кол-во</th><th>Цена за ед.</th></tr>
+          <tr><td>0–99</td><td>32 000 ?</td></tr>
+          <tr><td>100–499</td><td>16 000 ?</td></tr>
+          <tr><td>500–999</td><td>12 000 ?</td></tr>
+          <tr><td>1 000+</td><td>8 000 ?</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="grid g2" style="margin-top:22px">
+      <div class="note" style="margin-top:0"><b>Техническая поддержка:</b> доступ к обновлениям и базовой техподдержке — <b>20% от стоимости лицензии</b>.</div>
+      <div class="note" style="margin-top:0;border-left-color:var(--peach)"><b>Право модернизации исходного кода:</b> лицензия — <b>20% от стоимости лицензии</b>.</div>
+    </div>
+
+    <!-- Услуги дистрибьютора -->
+    <div style="background:var(--peach-soft);border-radius:var(--r-lg);padding:28px 24px 24px;margin-top:40px">
+    <h3 style="margin:0 0 16px">Услуги дистрибьютора</h3>
+    <div class="grid g4" style="gap:16px;margin-top:0">
+      <div class="card" style="background:var(--surface);border-color:var(--line)">
+        <h3 style="color:var(--violet-deep)">Индивидуальное обучение</h3>
+        <p style="font-size:15px;color:var(--ink-2);margin-bottom:8px;line-height:1.4">1-на-1, онлайн</p>
+        <div style="font-size:13px;font-weight:600;color:var(--ink-3);margin-top:4px">По запросу</div>
+      </div>
+      <div class="card" style="background:var(--surface);border-color:var(--line)">
+        <h3 style="color:var(--violet-deep)">Групповое обучение</h3>
+        <p style="font-size:15px;color:var(--ink-2);margin-bottom:8px;line-height:1.4">Вебинар / мини-группа</p>
+        <div style="font-size:13px;font-weight:600;color:var(--ink-3);margin-top:4px">По запросу</div>
+      </div>
+      <div class="card" style="background:var(--surface);border-color:var(--line)">
+        <h3 style="color:var(--violet-deep)">Помощь с первым кейсом</h3>
+        <p style="font-size:15px;color:var(--ink-2);margin-bottom:8px;line-height:1.4">Консультация + настройка</p>
+        <div style="font-size:13px;font-weight:600;color:var(--ink-3);margin-top:4px">По запросу</div>
+      </div>
+      <div class="card" style="background:var(--surface);border-color:var(--line)">
+        <h3 style="color:var(--violet-deep)">Сессия по целеполаганию</h3>
+        <p style="font-size:15px;color:var(--ink-2);margin-bottom:8px;line-height:1.4">Определение целей AI по методикам ROI и DTBD</p>
+        <div style="font-size:13px;font-weight:600;color:var(--ink-3);margin-top:4px">По запросу</div>
+      </div>
+    </div>
+    </div>
+
+  </div>
+</section>
+<!-- ===== Вебинары ===== -->
+<section class="section" style="background:linear-gradient(135deg,#121212 0%,#161018 45%,#1a1424 100%);color:#fff">
+  <div class="wrap">
+    <div class="eyebrow" style="color:var(--peach)">Сообщество</div>
+    <h2 style="color:#fff">Вебинары и новости</h2>
+    <p class="sub" style="color:rgba(255,255,255,.7)">Живое сообщество, регулярные события, материалы для партнёров.</p>
+    <div class="grid g3">
+      <div class="card top" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:#fff">
+        <div class="ic" style="background:rgba(255,255,255,.12)"><svg viewBox="0 0 24 24" style="stroke:#fff"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/></svg></div>
+        <h3 style="color:#fff">Ближайший вебинар</h3>
+        <p style="font-size:13px;color:var(--peach);font-weight:600;margin-bottom:4px">2 июля 2026 · 11:00 (МСК)</p>
+        <p style="font-size:15px;color:rgba(255,255,255,.8);font-weight:600;margin-bottom:4px">«Бизнес-логика AI-трансформации на примере договорной аналитики»</p>
+        <p style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:10px">Спикер: Ольга Кукушкина, эксперт по AI-трансформации</p>
+        <p style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.55">Расскажу как уже сегодня выстраивать сквозные процессы с измеримым бизнес-эффектом на ИИ-агентах — когда человек управляет агентами через политики, а не выполняет рутину. На примере реального кейса автоматической сверки договоров и анализа формулировок посмотрим, как ИИ-агенты помогают эффективно выстроить работу внутри компании. Один раз работать процесс — и дальше он работает внутри процессов сам.</p>
+        <a href="#" class="btn btn--white" style="margin-top:16px;font-size:14px;padding:10px 20px">Зарегистрироваться</a>
+      </div>
+      <div class="card top" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:#fff">
+        <div class="ic peach" style="background:rgba(255,255,255,.12)"><svg viewBox="0 0 24 24" style="stroke:var(--peach)"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <h3 style="color:#fff">Новости системы</h3>
+        <p style="font-size:15px;color:rgba(255,255,255,.8);font-weight:600;margin-bottom:8px">Обновление версий 0.54.0 ? 0.64.1</p>
+        <p style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.55">Крупное накопительное обновление платформы LadCraft: улучшенная маршрутизация агентов, расширенный маркетплейс навыков, новые инструменты оркестрации, доработки безопасности и производительности. Десятки изменений для стабильной работы автономных ИИ-агентов в корпоративной среде. Внедрена поддержка A2A-протокола, улучшена работа с SQL-хранилищем и расширены возможности RAG.</p>
+        <a href="https://ladcraft.ru/updates/" class="btn btn--outline" style="margin-top:16px;font-size:14px;padding:10px 20px;border-color:rgba(255,255,255,.4);color:#fff">Подробнее</a>
+      </div>
+      <div class="card top" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:#fff">
+        <div class="ic" style="background:rgba(255,255,255,.12)"><svg viewBox="0 0 24 24" style="stroke:#fff"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+        <h3 style="color:#fff">Telegram-канал</h3>
+        <p style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.55">Закрытое сообщество для партнёрской сети LadCraft, которое ведёт Ольга Кукушкина — эксперт по AI-трансформации, 20 лет опыта в ИТ, 15+ лет в управлении.</p>
+        <p style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.55;margin-top:8px">В канале — материалы про AI-native трансформацию бизнеса: от стратегии до перевода команд в AI-first-формат.</p>
+        <p style="font-size:14px;color:var(--peach);margin-top:8px">«Только кейсы. Только хард. ИИ-трансформации бизнеса — без соплей.»</p>
+        <span class="btn btn--outline" style="margin-top:16px;font-size:14px;padding:10px 20px;border-color:rgba(255,255,255,.4);color:#fff;display:inline-flex;align-items:center;gap:10px">Подписаться</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Заявка ===== -->
+<section id="form" class="section">
+  <div class="wrap">
+    <div class="eyebrow">Подключение</div>
+    <h2>Стать партнёром</h2>
+    <p class="sub">Заполните форму — и мы свяжемся с вами в ближайшее время.</p>
+    <div class="grid g2">
+      <div class="card" style="padding:36px">
+        <form id="partnerForm" onsubmit="event.preventDefault();alert('Спасибо! Мы свяжемся с вами в ближайшее время.');this.reset()">
+          <div class="form-group"><label>Имя *</label><input type="text" required placeholder="Ваше имя"></div>
+          <div class="form-group"><label>Email *</label><input type="email" required placeholder="email@example.com"></div>
+          <div class="form-group"><label>Телефон</label><input type="tel" placeholder="+7 (___) ___-__-__"></div>
+          <div class="form-group"><label>Компания</label><input type="text" placeholder="Название компании"></div>
+          <div class="form-group">
+            <label>Что интересует</label>
+            <div class="checkbox-group">
+              <label><input type="checkbox"> Партнёрство</label>
+              <label><input type="checkbox"> Обучение</label>
+              <label><input type="checkbox"> Кейсы</label>
+              <label><input type="checkbox"> Другое</label>
+            </div>
+          </div>
+          <button type="submit" class="btn" style="width:100%;justify-content:center">Отправить заявку</button>
+        </form>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:24px">
+        <div class="card top" style="text-align:center;padding:36px">
+          <div class="ic" style="margin:0 auto 16px"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <h3>Готовы попробовать сами?</h3>
+          <p style="margin:8px 0 20px;font-size:14px;color:var(--ink-2)">Получите пробный тариф с удвоенными токенами по партнёрской ссылке.</p>
+          <a href="https://app.ladcraft.ru/login?share_token=AxvdTnPCwK3wvb2vW5ZWt&authMode=sign_up" class="btn">Получить пробный тариф</a>
+        </div>
+        <div class="card top" style="text-align:center;padding:36px">
+          <div class="ic peach" style="margin:0 auto 16px"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+          <h3>Telegram-канал партнёров</h3>
+          <p style="margin:8px 0 20px;font-size:14px;color:var(--ink-2)">Закрытое сообщество: материалы, кейсы, поддержка.</p>
+          <a href="#" class="btn btn--outline">Подписаться</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Футер ===== -->
+<footer class="footer">
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:32px">
+      <div>
+        <div style="margin-bottom:12px">
+          <span style="font-size:18px;font-weight:800;letter-spacing:-.01em"><span class="sticker-ok" style="width:28px;height:28px;margin-right:1px;font-size:18px"><span class="sticker-inner"><span class="sticker-eye"><span class="sticker-brow"></span></span>K</span></span>ey, LadCraft</span>
+        </div>
+        <p style="font-size:14px;opacity:.6;line-height:1.6">Официальная дистрибьюция LadCraft</p>
+      </div>
+      <div style="display:flex;gap:48px;flex-wrap:wrap">
+        <div>
+          <p style="font-size:12px;font-weight:600;margin-bottom:10px;opacity:.4;letter-spacing:.04em;text-transform:uppercase">Контакты</p>
+          <p style="font-size:14px;opacity:.7;line-height:1.8">kukushkinaoa@gmail.com</p>
+          <p style="font-size:14px;opacity:.7;line-height:1.8">Telegram: @QQ0lka</p>
+        </div>
+        <div>
+          <p style="font-size:12px;font-weight:600;margin-bottom:10px;opacity:.4;letter-spacing:.04em;text-transform:uppercase">Ссылки</p>
+          <p style="font-size:14px;line-height:1.8"><a href="https://ladcraft.ru">LadCraft.ru</a></p>
+          <p style="font-size:14px;line-height:1.8">Telegram-канал</p>
+        </div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.08);margin-top:40px;padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;opacity:.4">
+      <span>© 2026 Ольга Кукушкина. Все права защищены.</span>
+      <a href="#" style="color:inherit">Политика конфиденциальности</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
